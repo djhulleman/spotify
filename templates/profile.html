@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ user_data['display_name'] }}!</h1>
+    <img src="{{ user_data['images'][0]['url'] }}" alt="Profile Image" width="150">
+    <p><strong>Email:</strong> {{ user_data['email'] }}</p>
+    <p><strong>Country:</strong> {{ user_data['country'] }}</p>
+
+    <a href="/recommend"><button>Recommend new music</button></a>
+
+    <h2>Your Top Artists</h2>
+    <ul>
+        {% for artist in top_artists['items'] %}
+            <li>
+                <img src="{{ artist['images'][0]['url'] }}" alt="{{ artist['name'] }}" width="100">
+                <strong>{{ artist['name'] }}</strong>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Your Top Tracks</h2>
+    <ul>
+        {% for track in top_tracks['items'] %}
+            <li>
+                <img src="{{ track['album']['images'][0]['url'] }}" alt="{{ track['name'] }}" width="100">
+                <strong>{{ track['name'] }}</strong> by {{ track['artists'][0]['name'] }}
+                <br>
+                <strong>Popularity:</strong> {{ track['popularity'] }}
+                <br>
+                <strong>Duration:</strong> {{ track['duration_ms'] // 1000 }} seconds
+                <br>
+                <strong>Album:</strong> {{ track['album']['name'] }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/logout"><button>Logout</button></a>
+</body>
+</html>

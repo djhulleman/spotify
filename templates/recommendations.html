@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Music Recommendations</title>
+</head>
+<body>
+    <h1>Music Recommendations</h1>
+
+    {% if tracks %}
+        <ul>
+            {% for track in tracks %}
+                <li>
+                    <strong>{{ track.name }}</strong> by 
+                    {% if track.type == 'Track' %}
+                        {{ track.artist }}
+                    {% else %}
+                        Unknown Artist (Artist recommendations)
+                    {% endif %}
+                    <br>
+                    {% if track.type == 'Track' %}
+                        Album: {{ track.album }} | Popularity: {{ track.popularity }}
+                        <br>
+                        {% if track.preview_url %}
+                            <audio controls>
+                                <source src="{{ track.preview_url }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        {% else %}
+                            No preview available
+                        {% endif %}
+                    {% else %}
+                        Genres: {{ track.genres | join(', ') }} | Popularity: {{ track.popularity }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recommendations available. Please try again later.</p>
+    {% endif %}
+    
+    <a href="/logout"><button>Logout</button></a>
+</body>
+</html>
